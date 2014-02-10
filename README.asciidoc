@@ -1,0 +1,55 @@
+= pgespresso
+
+Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL
+
+* Version: 0.1
+* Based on an idea by Simon Riggs
+* Authors: Gabriele Bartolini, Marco Nenciarini and Simon Riggs
+
+== Introduction
+
+*pgespresso* is an extension that adds functions and views
+to be used by Barman, the disaster recovery tool written
+by 2ndQuadrant and released as open source (http://www.pgbarman.org/).
+
+== Supported PostgreSQL and Barman versions
+
+This extension requires at least PostgreSQL 9.2 and Barman 1.3.1.
+
+== Installation
+
+To install +pgespresso+ from sources, type:
+
+----
+make
+make install
+----
+
++pgespresso+ can be installed in a specific database using
+the following command:
+
+----
+CREATE EXTENSION pgespresso;
+----
+
+== Available functions
+
+`pgespresso_start_backup (label, fast)`::
+`pgespresso_start_backup` returns a backup label file that the
+user is responsible for placing in the $PGDATA of the backup AFTER
+the backup has been taken.  The label file must not be written to the
+data directory of the server from which the backup is taken because
+this type of backup presumes and allows that more than one backup
+may be in progress at any one time.  The label file
+contains the user-supplied label string (typically this would be used
+to tell where the backup dump will be stored) and the starting time and
+starting WAL location for the dump.
+
+`pgespresso_stop_backup (label_content)`::
+`pgespresso_stop_backup` returns the filename containing end of backup location, combining
+both the TLI and the end location.footnote:[The user is responsible for
+ensuring that the last file is correctly archived.]
+
+== License
+
+pgespresso is free software. See COPYING for details.
