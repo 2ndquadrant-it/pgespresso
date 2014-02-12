@@ -53,6 +53,7 @@ pgespresso_start_backup(PG_FUNCTION_ARGS)
 	char	   *backupidstr;
 	XLogRecPtr	startpoint;
 	char       *labelfile;
+	TimeLineID  replayTLI;
 
 	backupidstr = text_to_cstring(backupid);
 
@@ -60,6 +61,18 @@ pgespresso_start_backup(PG_FUNCTION_ARGS)
 		ereport(ERROR,
 				(errcode(ERRCODE_INSUFFICIENT_PRIVILEGE),
 		   errmsg("must be superuser or replication role to run a backup")));
+
+	/*
+	 * ThisTimeLineID is always 0 in a normal backend during recovery.
+	 * We get latest redo apply position timeline and we update it globally
+	 * to make do_pg_start_backup use the correct value when generating
+	 * backup label text
+	 */
+	if (RecoveryInProgress()) {
+	  GetXLogReplayRecPtr(&replayTLI);
+	  ThisTimeLineID = replayTLI;
+	  elog(DEBUG1, "updated ThisTimeLineID = %u", ThisTimeLineID);
+	}
 
 	startpoint = do_pg_start_backup(backupidstr, fast, NULL, &labelfile);
 
