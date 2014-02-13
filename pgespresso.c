@@ -21,6 +21,7 @@
 
 #include "access/xlog.h"
 #include "access/xlog_internal.h"
+#include "access/xlogdefs.h"
 #include "utils/builtins.h"
 #include "miscadmin.h"
 
@@ -51,9 +52,7 @@ pgespresso_start_backup(PG_FUNCTION_ARGS)
 	text	   *backupid = PG_GETARG_TEXT_P(0);
 	bool		fast = PG_GETARG_BOOL(1);
 	char	   *backupidstr;
-	XLogRecPtr	startpoint;
 	char       *labelfile;
-	TimeLineID  replayTLI;
 
 	backupidstr = text_to_cstring(backupid);
 
@@ -69,12 +68,22 @@ pgespresso_start_backup(PG_FUNCTION_ARGS)
 	 * backup label text
 	 */
 	if (RecoveryInProgress()) {
-	  GetXLogReplayRecPtr(&replayTLI);
-	  ThisTimeLineID = replayTLI;
-	  elog(DEBUG1, "updated ThisTimeLineID = %u", ThisTimeLineID);
+		TimeLineID	replayTLI;
+
+		GetXLogReplayRecPtr(&replayTLI);
+		ThisTimeLineID = replayTLI;
+		elog(DEBUG1, "updated ThisTimeLineID = %u", ThisTimeLineID);
 	}
 
-	startpoint = do_pg_start_backup(backupidstr, fast, NULL, &labelfile);
+	/*
+	 * Starting from 9.3 the do_pg_start_backup returns the timeline ID
+	 * in *starttli_p additional argument
+	 */
+	#if PG_VERSION_NUM >= 90300
+		do_pg_start_backup(backupidstr, fast, NULL, &labelfile);
+	#else
+		do_pg_start_backup(backupidstr, fast, &labelfile);
+	#endif
 
 	PG_RETURN_TEXT_P(cstring_to_text(labelfile));
 }
@@ -94,9 +103,7 @@ pgespresso_stop_backup(PG_FUNCTION_ARGS)
 	XLogRecPtr	stoppoint;
 	text	   *labelfile = PG_GETARG_TEXT_P(0);
 	char	   *backupidstr;
-	XLogSegNo	xlogsegno;
 	char		xlogfilename[MAXFNAMELEN];
-	TimeLineID  endtli;
 
 	backupidstr = text_to_cstring(labelfile);
 
@@ -105,12 +112,43 @@ pgespresso_stop_backup(PG_FUNCTION_ARGS)
 				(errcode(ERRCODE_INSUFFICIENT_PRIVILEGE),
 		 (errmsg("must be superuser or replication role to run a backup"))));
 
-	stoppoint = do_pg_stop_backup(backupidstr,
-								  false,  /* don't wait for archive */
-								  &endtli);
+	#if PG_VERSION_NUM >= 90300
+	{
+		XLogSegNo	xlogsegno;
+		TimeLineID	endtli;
 
-	XLByteToPrevSeg(stoppoint, xlogsegno);
-	XLogFileName(xlogfilename, endtli, xlogsegno);
+		stoppoint = do_pg_stop_backup(backupidstr,
+									  false,  /* don't wait for archive */
+									  &endtli);
+
+		XLByteToPrevSeg(stoppoint, xlogsegno);
+		XLogFileName(xlogfilename, endtli, xlogsegno);
+	}
+	#else
+	{
+		uint32		xlogid;
+		uint32		xlogseg;
+
+		stoppoint = do_pg_stop_backup(backupidstr,
+									  false);  /* don't wait for archive */
+
+		/*
+		 * In 9.2 the do_pg_stop_backup doesn't return the timeline ID and
+		 * ThisTimeLineID is always 0 in a normal backend during recovery.
+		 * We get latest redo apply position timeline and we update it globally
+		 */
+		if (RecoveryInProgress()) {
+			TimeLineID	replayTLI;
+
+			GetXLogReplayRecPtr(&replayTLI);
+			ThisTimeLineID = replayTLI;
+			elog(DEBUG1, "updated ThisTimeLineID = %u", ThisTimeLineID);
+		}
+
+		XLByteToPrevSeg(stoppoint, xlogid, xlogseg);
+		XLogFileName(xlogfilename, ThisTimeLineID, xlogid, xlogseg);
+	}
+	#endif
 
 	PG_RETURN_TEXT_P(cstring_to_text(xlogfilename));
 }
