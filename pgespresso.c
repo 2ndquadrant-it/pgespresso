@@ -67,7 +67,7 @@ pgespresso_start_backup(PG_FUNCTION_ARGS)
 	 * ThisTimeLineID is always 0 in a normal backend during recovery.
 	 * We get latest redo apply position timeline and we update it globally
 	 * to make do_pg_start_backup use the correct value when generating
-	 * backup label text
+	 * the backup label text
 	 */
 	if (RecoveryInProgress()) {
 		TimeLineID	replayTLI;
@@ -95,7 +95,7 @@ pgespresso_start_backup(PG_FUNCTION_ARGS)
  *
  * Only parameter is the labelfile returned from pg_start_concurrent_backup
  *
- * Return is the filename containing end of backup location, combining
+ * Return is the XLOG filename containing end of backup location, combining
  * both the TLI and the end location. NOTE: the user is responsible for
  * ensuring that the last file is correctly archived.
  */
@@ -158,8 +158,8 @@ pgespresso_stop_backup(PG_FUNCTION_ARGS)
 /*
  * pgespresso_abort_backup: abort a running backup
  *
- * This does just the most basic steps of pgespresso_stop_backup(), by taking the
- * system out of backup mode, thus making it a lot more safe to call from
+ * This does just the most basic steps of pgespresso_stop_backup(), by taking
+ * the system out of backup mode, thus making it a lot more safe to call from
  * an error handler.
  */
 Datum

@@ -35,7 +35,8 @@ CREATE EXTENSION pgespresso;
 == Available functions
 
 `pgespresso_start_backup (label, fast)`::
-`pgespresso_start_backup` returns a backup label file that the
+`pgespresso_start_backup` is used to start taking a concurrent
+backup. It returns a backup label file that the
 user is responsible for placing in the $PGDATA of the backup AFTER
 the backup has been taken.  The label file must not be written to the
 data directory of the server from which the backup is taken because
@@ -46,15 +47,13 @@ to tell where the backup dump will be stored) and the starting time and
 starting WAL location for the dump.
 
 `pgespresso_stop_backup (label_content)`::
-`pgespresso_stop_backup` returns the filename containing end of backup location, combining
+`pgespresso_stop_backup` is used to stop a concurrent backup.
+It returns the XLOG filename containing end of backup location, combining
 both the TLI and the end location.footnote:[The user is responsible for
 ensuring that the last file is correctly archived.]
 
 `pgespresso_abort_backup ()`::
-`pgespresso_abort_backup` abort a running backup
-doing just the most basic steps of `pgespresso_stop_backup`, by taking the
-system out of backup mode, thus making it a lot more safe to call from
-an error handler.
+`pgespresso_abort_backup` aborts a running concurrent backup.
 
 == License
 
