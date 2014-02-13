@@ -50,6 +50,12 @@ starting WAL location for the dump.
 both the TLI and the end location.footnote:[The user is responsible for
 ensuring that the last file is correctly archived.]
 
+`pgespresso_abort_backup ()`::
+`pgespresso_abort_backup` abort a running backup
+doing just the most basic steps of `pgespresso_stop_backup`, by taking the
+system out of backup mode, thus making it a lot more safe to call from
+an error handler.
+
 == License
 
 pgespresso is free software. See COPYING for details.

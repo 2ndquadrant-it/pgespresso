@@ -29,9 +29,11 @@ PG_MODULE_MAGIC;
 
 Datum pgespresso_start_backup(PG_FUNCTION_ARGS);
 Datum pgespresso_stop_backup(PG_FUNCTION_ARGS);
+Datum pgespresso_abort_backup(PG_FUNCTION_ARGS);
 
 PG_FUNCTION_INFO_V1(pgespresso_start_backup);
 PG_FUNCTION_INFO_V1(pgespresso_stop_backup);
+PG_FUNCTION_INFO_V1(pgespresso_abort_backup);
 
 /*
  * pgespresso_start_backup: set up for taking an on-line backup dump
@@ -151,4 +153,24 @@ pgespresso_stop_backup(PG_FUNCTION_ARGS)
 	#endif
 
 	PG_RETURN_TEXT_P(cstring_to_text(xlogfilename));
+}
+
+/*
+ * pgespresso_abort_backup: abort a running backup
+ *
+ * This does just the most basic steps of pgespresso_stop_backup(), by taking the
+ * system out of backup mode, thus making it a lot more safe to call from
+ * an error handler.
+ */
+Datum
+pgespresso_abort_backup(PG_FUNCTION_ARGS)
+{
+	if (!superuser() && !has_rolreplication(GetUserId()))
+		ereport(ERROR,
+				(errcode(ERRCODE_INSUFFICIENT_PRIVILEGE),
+		 (errmsg("must be superuser or replication role to run a backup"))));
+
+	do_pg_abort_backup();
+
+	PG_RETURN_VOID();
 }
