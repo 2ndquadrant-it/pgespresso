@@ -11,11 +11,12 @@
    "license": {
       "PostgreSQL": "http://www.postgresql.org/about/licence"
    },
-   "prereqs": {
-      "runtime": {
-         "requires": {
-            "PostgreSQL": "9.2.0"
-         },
+   "prereqs":{
+      "runtime":{
+        "requires":{
+          "PostgreSQL": "9.2.0"
+        }
+      }
    },
    "provides": {
      "pgespresso": {
@@ -23,7 +24,7 @@
        "docfile": "README.asciidoc",
        "version": "1.0.0",
        "abstract": "Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL"
-     },
+     }
    },
    "resources": {
       "homepage": "https://github.com/2ndquadrant-it/pgespresso",
