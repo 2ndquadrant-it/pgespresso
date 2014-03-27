@@ -1,0 +1,52 @@
+{
+   "name": "pgespresso",
+   "abstract": "Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL",
+   "description": "pgespresso is an extension that adds functions and views to be used by Barman, the disaster recovery tool written by 2ndQuadrant and released as open source (http://www.pgbarman.org/).",
+   "version": "1.0.0",
+   "maintainer": [
+      "Gabriele Bartolini <gabriele.bartolini@2ndQuadrant.it>",
+      "Giulio Calacoci <giulio.calacoci@2ndQuadrant.it>",
+      "Marco Nenciarini <marco.nenciarini@2ndQuadrant.it>"
+   ],
+   "license": {
+      "PostgreSQL": "http://www.postgresql.org/about/licence"
+   },
+   "prereqs": {
+      "runtime": {
+         "requires": {
+            "PostgreSQL": "9.2.0"
+         },
+   },
+   "provides": {
+     "pgespresso": {
+       "file": "pgespresso--1.0.sql",
+       "docfile": "README.asciidoc",
+       "version": "1.0.0",
+       "abstract": "Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL"
+     },
+   },
+   "resources": {
+      "homepage": "https://github.com/2ndquadrant-it/pgespresso",
+      "bugtracker": {
+         "web": "https://github.com/2ndquadrant-it/pgespresso/issues"
+      },
+      "repository": {
+        "url":  "https://github.com/2ndquadrant-it/pgespresso.git",
+        "web":  "https://github.com/2ndquadrant-it/pgespresso",
+        "type": "git"
+      }
+   },
+   "generated_by": "Giulio Calacoci",
+   "release_status": "stable",
+   "meta-spec": {
+      "version": "1.0.0",
+      "url": "http://pgxn.org/meta/spec.txt"
+   },
+   "tags": [
+      "Barman",
+      "concurrent backup",
+      "backup",
+      "backup from standby",
+      "pgespresso"
+   ]
+}
