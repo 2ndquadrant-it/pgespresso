@@ -1,0 +1,54 @@
+2014-04-11  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
+
+	Update the ChangeLog file
+
+	Add release.sh script
+
+2014-04-08  Gabriele Bartolini  <gabriele.bartolini@2ndQuadrant.it>
+
+	Added RPM spec file
+
+2014-04-02  Giulio Calacoci  <giulio.calacoci@2ndquadrant.it>
+
+	Modified META.json. Added requirements in description and abstract
+
+2014-03-27  Giulio Calacoci  <giulio.calacoci@2ndquadrant.it>
+
+	correction of json syntax
+
+	added META.json file for pgxn
+
+	changed version from 0.1 to 1.0
+
+2014-03-27  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
+
+	Fix COPYING file
+
+2014-02-13  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
+
+	Added basic testing script
+
+2014-02-13  Gabriele Bartolini  <gabriele.bartolini@2ndQuadrant.it>
+
+	Cosmetic changes on comments
+
+2014-02-13  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
+
+	Add pgespresso_abort_backup function
+	pgespresso_abort_backup allows the user to terminate a backup without
+	any knowledge about the backup label content. This function is intended
+	to be called by an error handler.
+
+	Support PostgreSQL 9.2
+
+2014-02-12  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
+
+	Write correct file name in "START WAL LOCATION" backup_label's field
+	ThisTimeLineID is always 0 in a normal backend during recovery.
+	We get latest redo apply position timeline and we update it globally
+	to make do_pg_start_backup using the correct value when generate the
+	backup label text
+
+2014-02-10  Gabriele Bartolini  <gabriele.bartolini@2ndQuadrant.it>
+
+	Initial commit
