@@ -1,10 +1,10 @@
-%global pgmajorversion 93
-%global pginstdir /usr/pgsql-9.3
+%global pgmajorversion 95
+%global pginstdir /usr/pgsql-9.5
 %global sname pgespresso
 
 Summary:	Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL
 Name:		%{sname}%{pgmajorversion}
-Version:	1.0
+Version:	1.1
 Release:	1%{?dist}
 License:	BSD
 Group:		Applications/Databases
@@ -43,5 +43,8 @@ rm -rf %{buildroot}
 %{pginstdir}/share/extension/%{sname}.control
 
 %changelog
-* Mon Apr 7 2013 - Marco Nenciarini <marco.nenciarini@2ndquadrant.it> 1.0-1
+* Sun May 22 2016 - Marco Nenciarini <marco.nenciarini@2ndquadrant.it> 1.1-1
+- Release 1.1-1.
+
+* Sun Apr  7 2013 - Marco Nenciarini <marco.nenciarini@2ndquadrant.it> 1.0-1
 - Initial packaging.
