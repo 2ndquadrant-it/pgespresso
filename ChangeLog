@@ -1,3 +1,17 @@
+2016-05-22  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
+
+	Update the ChangeLog file
+
+	Set version to 1.1
+
+2015-12-16  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
+
+	Add compatibility with PostgreSQL 9.5 Fixes: #4
+	The incompatible changes have been introduced with commit
+	72d422a5227ef6f76f412486a395aba9f53bf3f0 during 9.5 development.
+
+	Ref: http://git.postgresql.org/gitweb/?p=postgresql.git;h=72d422a
+
 2014-04-11  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
 
 	Update the ChangeLog file
