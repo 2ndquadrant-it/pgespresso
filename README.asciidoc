@@ -2,7 +2,7 @@
 
 Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL
 
-* Version: 1.0
+* Version: 1.1
 * Based on an idea by Simon Riggs
 * Authors: Gabriele Bartolini, Marco Nenciarini and Simon Riggs
 
