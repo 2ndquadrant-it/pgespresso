@@ -2,7 +2,7 @@
 
 Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL
 
-* Version: 1.1
+* Version: 1.2
 * Based on an idea by Simon Riggs
 * Authors: Gabriele Bartolini, Marco Nenciarini and Simon Riggs
 
@@ -14,7 +14,11 @@ by 2ndQuadrant and released as open source (http://www.pgbarman.org/).
 
 == Supported PostgreSQL and Barman versions
 
-This extension requires at least PostgreSQL 9.2 and Barman 1.3.1.
+This extension requires at least Barman 1.3.1.
+Supported PostgreSQL versions are 9.2, 9.3, 9.4 and 9.5.
+
+Starting from PostgreSQL 9.6 this extension is not required anymore
+because a similar API is implemented in the PostgreSQL's core.
 
 == Installation
 

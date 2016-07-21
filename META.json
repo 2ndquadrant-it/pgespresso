@@ -1,8 +1,8 @@
 {
    "name": "pgespresso",
-   "abstract": "Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL. Requires at least Barman 1.3.1 and PostgreSQL 9.2",
-   "description": "pgespresso is an extension that adds functions and views to be used by Barman, the disaster recovery tool written by 2ndQuadrant and released as open source (http://www.pgbarman.org/). Requires at least Barman 1.3.1 and PostgreSQL 9.2 ",
-   "version": "1.1.0",
+   "abstract": "Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL. Requires at least Barman 1.3.1 and PostgreSQL 9.2, 9.3, 9.4 or 9.5.",
+   "description": "pgespresso is an extension that adds functions and views to be used by Barman, the disaster recovery tool written by 2ndQuadrant and released as open source (http://www.pgbarman.org/). Requires at least Barman 1.3.1 and PostgreSQL 9.2, 9.3, 9.4 or 9.5.",
+   "version": "1.2.0",
    "maintainer": [
       "Gabriele Bartolini <gabriele.bartolini@2ndQuadrant.it>",
       "Giulio Calacoci <giulio.calacoci@2ndQuadrant.it>",
@@ -20,9 +20,9 @@
    },
    "provides": {
      "pgespresso": {
-       "file": "pgespresso--1.1.sql",
+       "file": "pgespresso--1.2.sql",
        "docfile": "README.asciidoc",
-       "version": "1.1.0",
+       "version": "1.2.0",
        "abstract": "Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL"
      }
    },

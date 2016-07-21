@@ -4,7 +4,7 @@
 
 Summary:	Optional Extension for Barman, Backup and Recovery Manager for PostgreSQL
 Name:		%{sname}%{pgmajorversion}
-Version:	1.1
+Version:	1.2
 Release:	1%{?dist}
 License:	BSD
 Group:		Applications/Databases
@@ -43,6 +43,9 @@ rm -rf %{buildroot}
 %{pginstdir}/share/extension/%{sname}.control
 
 %changelog
+* Thu Jul 21 2016 - Marco Nenciarini <marco.nenciarini@2ndquadrant.it> 1.2-1
+- Release 1.2-1.
+
 * Sun May 22 2016 - Marco Nenciarini <marco.nenciarini@2ndquadrant.it> 1.1-1
 - Release 1.1-1.
 
