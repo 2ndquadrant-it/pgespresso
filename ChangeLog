@@ -1,4 +1,24 @@
+2016-07-21  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
+
+	Update the ChangeLog file
+
+	Set version to 1.2
+
+2016-06-08  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
+
+	Fix crash with 9.5 and tablespaces (Fixes #9)
+	On 9.5, the do_pg_start_backup function requires the tblspcmapfile
+	parameter to be defined if at least one tablespace is present.
+
+	Originally fixed in #8 by Oskari Saarenmaa <os@ohmu.fi>
+
+2016-05-23  Giulio Calacoci  <giulio.calacoci@2ndquadrant.it>
+
+	Change version in README.asciidoc
+
 2016-05-22  Marco Nenciarini  <marco.nenciarini@2ndquadrant.it>
+
+	Update RPM packagin and META.json
 
 	Update the ChangeLog file
 
